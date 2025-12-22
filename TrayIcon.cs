@@ -180,7 +180,7 @@ namespace TrayIcon
         {
             var items = new List<TrayMenuItem>();
 
-            foreach (var file in Directory.GetFiles(AppDomain.CurrentDomain.BaseDirectory, "*.csv", SearchOption.AllDirectories))
+            foreach (var file in Directory.GetFiles(AppDomain.CurrentDomain.BaseDirectory, "*.csv", System.IO.SearchOption.AllDirectories))
             {
                 items.AddRange(LoadFile(file));
             }
