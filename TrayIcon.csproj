@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <AssemblyName>TrayIcon</AssemblyName>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>TrayIcon</RootNamespace>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ApplicationIcon>TrayIcon.ico</ApplicationIcon>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="TrayIcon.ico" />
+  </ItemGroup>
+</Project>

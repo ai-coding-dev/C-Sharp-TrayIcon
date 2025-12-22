@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="TrayIcon.csproj" />
+  <Folder Name="/Solution Folder/">
+    <File Path="TrayIcon.cs" />
+    <File Path="NativeMethods.cs" />
+  </Folder>
+</Solution>
