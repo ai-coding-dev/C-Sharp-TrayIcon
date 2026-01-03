@@ -1,0 +1,71 @@
+Fedora,基本操作,exit,exit
+Fedora,基本操作,pwd,pwd
+Fedora,基本操作,ls,ls
+Fedora,基本操作,cd,cd
+Fedora,基本操作,clear,clear
+Fedora,基本操作,history,history
+Fedora,基本操作,whoami,whoami
+Fedora,基本操作,uname,uname
+Fedora,基本操作,hostname,hostname
+Fedora,基本操作,uptime,uptime
+
+Fedora,ファイル閲覧・編集,cat,cat
+Fedora,ファイル閲覧・編集,less,less
+Fedora,ファイル閲覧・編集,head,head
+Fedora,ファイル閲覧・編集,tail,tail
+Fedora,ファイル閲覧・編集,nano,nano
+Fedora,ファイル閲覧・編集,vi,vi
+Fedora,ファイル閲覧・編集,vim,vim
+
+Fedora,ファイル操作,touch,touch
+Fedora,ファイル操作,rm,rm
+Fedora,ファイル操作,mkdir,mkdir
+Fedora,ファイル操作,rmdir,rmdir
+Fedora,ファイル操作,cp,cp
+Fedora,ファイル操作,mv,mv
+
+Fedora,圧縮・解凍,tar,tar
+Fedora,圧縮・解凍,gzip,gzip
+Fedora,圧縮・解凍,gunzip,gunzip
+Fedora,圧縮・解凍,zip,zip
+Fedora,圧縮・解凍,unzip,unzip
+
+Fedora,ネットワーク,ping,ping
+Fedora,ネットワーク,tracepath,tracepath
+Fedora,ネットワーク,traceroute,traceroute
+Fedora,ネットワーク,nslookup,nslookup
+Fedora,ネットワーク,dig,dig
+Fedora,ネットワーク,ssh,ssh
+Fedora,ネットワーク,scp,scp
+Fedora,ネットワーク,sftp,sftp
+Fedora,ネットワーク,curl,curl
+Fedora,ネットワーク,wget,wget
+
+Fedora,パッケージ管理,dnf install,dnf install
+Fedora,パッケージ管理,dnf remove,dnf remove
+Fedora,パッケージ管理,dnf update,dnf update
+Fedora,パッケージ管理,dnf search,dnf search
+Fedora,パッケージ管理,dnf info,dnf info
+
+Fedora,systemd管理,systemctl list-units,systemctl list-units
+Fedora,systemd管理,systemctl start,systemctl start
+Fedora,systemd管理,systemctl stop,systemctl stop
+Fedora,systemd管理,systemctl restart,systemctl restart
+Fedora,systemd管理,systemctl status,systemctl status
+
+Fedora,システム状態,top,top
+Fedora,システム状態,htop,htop
+Fedora,システム状態,df,df
+Fedora,システム状態,free,free
+Fedora,システム状態,dmesg,dmesg
+
+Fedora,ユーザー管理,useradd,useradd
+Fedora,ユーザー管理,userdel,userdel
+Fedora,ユーザー管理,passwd,passwd
+Fedora,ユーザー管理,groups,groups
+
+Fedora,検索・テキスト処理,grep,grep
+Fedora,検索・テキスト処理,find,find
+Fedora,検索・テキスト処理,locate,locate
+Fedora,検索・テキスト処理,awk,awk
+Fedora,検索・テキスト処理,sed,sed

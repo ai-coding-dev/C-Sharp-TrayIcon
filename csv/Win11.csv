@@ -1,1 +1,16 @@
-
+Win11,システム,システム情報,ms-settings:about
+Win11,システム,タスクマネージャー,taskmgr
+Win11,ネットワーク,ネットワーク設定,ms-settings:network
+Win11,ネットワーク,Wi-Fi設定,ms-settings:network-wifi
+Win11,デバイス,デバイスマネージャー,devmgmt.msc
+Win11,デバイス,プリンターとスキャナー,ms-settings:printers
+Win11,アプリ,アプリと機能,ms-settings:appsfeatures
+Win11,アプリ,既定のアプリ,ms-settings:defaultapps
+Win11,システム,コントロールパネル,control
+Win11,電源,電源オプション,ms-settings:powersleep
+Win11,更新,Windows Update,ms-settings:windowsupdate
+Win11,セキュリティ,Windows セキュリティ,windowsdefender:
+Win11,ファイル,エクスプローラー,explorer
+Win11,ファイル,ファイル履歴,FileHistory.exe
+Win11,ユーザー,アカウント情報,ms-settings:yourinfo
+Win11,ユーザー,ユーザーの管理,netplwiz
