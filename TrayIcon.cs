@@ -8,7 +8,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.VisualBasic.FileIO;
-using static NativeMethods;
 
 namespace TrayIcon
 {
@@ -33,10 +32,11 @@ namespace TrayIcon
             _trayMenu = new ContextMenuStrip();
             ReloadTrayMenu();
 
+            //Icon = Icon.ExtractAssociatedIcon(Application.ExecutablePath),
             _trayIcon = new NotifyIcon
             {
                 ContextMenuStrip = _trayMenu,
-                Icon = Icon.ExtractAssociatedIcon(Application.ExecutablePath),
+                Icon = new Icon(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "TrayIcon.ico")),
                 Text = "Enjoy your day!",
                 Visible = true
             };
@@ -51,7 +51,10 @@ namespace TrayIcon
                     _trayIcon.Visible = false;
                     _trayIcon.Dispose();
                 }
-                _trayMenu?.Dispose();
+                if (_trayMenu != null)
+                {
+                    _trayMenu.Dispose();
+                }
             }
             base.Dispose(disposing);
         }
@@ -84,7 +87,7 @@ namespace TrayIcon
                             IntPtr hWnd = FindTopmostValidWindow();
                             if (hWnd != IntPtr.Zero)
                             {
-                                SetForegroundWindow(hWnd);
+                                NativeMethods.SetForegroundWindow(hWnd);
                                 await Task.Delay(1000);
                                 SendKeys.SendWait(item.ContentItem);
                             }
@@ -103,19 +106,20 @@ namespace TrayIcon
             IntPtr result = IntPtr.Zero;
             int currentPid = Process.GetCurrentProcess().Id;
 
-            EnumWindows((hWnd, lParam) =>
+            NativeMethods.EnumWindows(delegate (IntPtr hWnd, IntPtr lParam)
             {
-                if (!IsWindowVisible(hWnd)) return true;
+                if (!NativeMethods.IsWindowVisible(hWnd)) return true;
 
                 StringBuilder className = new StringBuilder(256);
-                GetClassName(hWnd, className, className.Capacity);
+                NativeMethods.GetClassName(hWnd, className, className.Capacity);
                 if (className.ToString() == "Shell_TrayWnd") return true;
 
-                GetWindowThreadProcessId(hWnd, out int pid);
+                int pid;
+                NativeMethods.GetWindowThreadProcessId(hWnd, out pid);
                 if (pid == currentPid) return true;
 
                 StringBuilder title = new StringBuilder(256);
-                GetWindowText(hWnd, title, title.Capacity);
+                NativeMethods.GetWindowText(hWnd, title, title.Capacity);
                 if (string.IsNullOrWhiteSpace(title.ToString())) return true;
 
                 result = hWnd;
@@ -151,11 +155,17 @@ namespace TrayIcon
                         var displayItem = new ToolStripMenuItem(item.DisplayItem);
                         displayItem.MouseUp += (s, e) => OnCommandMenuClick(s, e, item);
 
-                        subMenuItem ??= new ToolStripMenuItem(subMenu.Key);
+                        if (subMenuItem == null)
+                        {
+                            subMenuItem = new ToolStripMenuItem(subMenu.Key);
+                        }
                         subMenuItem.DropDownItems.Add(displayItem);
                     }
 
-                    mainMenuItem ??= new ToolStripMenuItem(mainMenu.Key);
+                    if (mainMenuItem == null)
+                    {
+                        mainMenuItem = new ToolStripMenuItem(mainMenu.Key);
+                    }
                     mainMenuItem.DropDownItems.Add(subMenuItem);
                 }
 
@@ -198,39 +208,42 @@ namespace TrayIcon
 
             try
             {
-                using var csvFile = new TextFieldParser(filePath)
+                using (var csvFile = new TextFieldParser(filePath)
                 {
                     HasFieldsEnclosedInQuotes = true,
                     TextFieldType = FieldType.Delimited,
                     TrimWhiteSpace = true
-                };
-                csvFile.SetDelimiters(",");
-
-                while (!csvFile.EndOfData)
+                })
                 {
-                    var fields = csvFile.ReadFields();
-                    if (fields.Length == 4)
-                    {
-                        var item = new TrayMenuItem
-                        {
-                            MainMenu = fields[0].Trim(),
-                            SubMenu = fields[1].Trim(),
-                            DisplayItem = fields[2].Trim(),
-                            ContentItem = fields[3].Trim()
-                        };
+                    csvFile.SetDelimiters(",");
 
-                        if (!string.IsNullOrEmpty(item.MainMenu) &&
-                            !string.IsNullOrEmpty(item.DisplayItem) &&
-                            !string.IsNullOrEmpty(item.ContentItem))
+                    while (!csvFile.EndOfData)
+                    {
+                        var fields = csvFile.ReadFields();
+                        if (fields.Length == 4)
                         {
-                            items.Add(item);
+                            var item = new TrayMenuItem
+                            {
+                                MainMenu = fields[0].Trim(),
+                                SubMenu = fields[1].Trim(),
+                                DisplayItem = fields[2].Trim(),
+                                ContentItem = fields[3].Trim()
+                            };
+
+                            if (!string.IsNullOrEmpty(item.MainMenu) &&
+                                !string.IsNullOrEmpty(item.DisplayItem) &&
+                                !string.IsNullOrEmpty(item.ContentItem))
+                            {
+                                items.Add(item);
+                            }
                         }
                     }
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Failed to load file '{filePath}': {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(string.Format("Failed to load file '{0}': {1}", filePath, ex.Message),
+                                "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 ApplicationExit();
             }
 

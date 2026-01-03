@@ -1,0 +1,10 @@
+@echo off
+"C:\Windows\Microsoft.NET\Framework64\v4.0.30319\csc.exe" ^
+/target:winexe ^
+/out:TrayIcon.exe ^
+/reference:System.dll ^
+/reference:System.Core.dll ^
+/reference:System.Drawing.dll ^
+/reference:System.Windows.Forms.dll ^
+/reference:Microsoft.VisualBasic.dll ^
+TrayIcon.cs NativeMethods.cs
